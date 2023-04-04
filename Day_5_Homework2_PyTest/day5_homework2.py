@@ -129,7 +129,7 @@ class Test_Day5_Homework2:
         testResult = errorMessage.text == "Epic sadface: Sorry, icon click."
         print(f"Test Result : {testResult}")
 
-    def test_product_number(self):
+    def test_total_product_number(self):
         WebDriverWait(self.driver,5).until(expected_conditions.visibility_of_element_located((By.ID,"user-name")))
         loginUserNameInput = self.driver.find_element(By.ID,"user-name")
         WebDriverWait(self.driver,5).until(expected_conditions.visibility_of_element_located((By.ID,"password")))
@@ -195,6 +195,6 @@ testClass.test_locked_out_user()
 testClass.test_add_to_cart()
 testClass.test_icon_click()
 testClass.test_product_filter()
-testClass.test_product_number()
+testClass.test_total_product_number()
 testClass.test_valid_login()
 testClass.test_site_page_redirect()

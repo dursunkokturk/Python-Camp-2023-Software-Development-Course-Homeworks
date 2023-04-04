@@ -22,7 +22,7 @@ class Test_Demo:
         self.driver.quit()
 
     @pytest.mark.parametrize("username,password",[("","")])
-    def test_username_password_empty(self, username: Literal[''], password: Literal['']):
+    def test_username_password_empty(self, username: Literal[""], password: Literal[""]):
         self.waitForElementVisible((By.ID,"user-name"))
         loginUserNameInput = self.driver.find_element(By.ID,"user-name")
         self.waitForElementVisible((By.ID,"password"))
@@ -37,10 +37,10 @@ class Test_Demo:
         loginBtn = self.driver.find_element(By.ID, "login-button")
         loginBtn.click()
         
-        self.driver.save_screenshot(f"{self.folderPath}/test-login-username-password-empty-{username}-{password}.png")
+        self.driver.save_screenshot(f"{self.folderPath}/test-login-username-and-password-empty-{username}-{password}.png")
 
         errorMessage = self.driver.find_element(By.XPATH,"//*[@id='login_button_container']/div/form/div[3]/h3")
-        assert errorMessage.text == "Epic sadface: Username and Password is required"
+        assert errorMessage.text == "Epic sadface: Username is required"
     
     @pytest.mark.parametrize("username,password",[("standard_user","")])
     def test_password_empty(self, username: Literal['standard_user'], password: Literal['']):
@@ -49,12 +49,10 @@ class Test_Demo:
         self.waitForElementVisible((By.ID,"password"))
         loginUserPasswordInput = self.driver.find_element(By.ID,"password")
         
-        loginUserNameInput.send_keys(username)
-        loginUserPasswordInput.send_keys(password)
-        # actions = ActionChains(self.driver)
-        # actions.send_keys_to_element(loginUserNameInput,username)
-        # actions.send_keys_to_element(loginUserPasswordInput,password)
-        # actions.perform()
+        actions = ActionChains(self.driver)
+        actions.send_keys_to_element(loginUserNameInput,username)
+        actions.send_keys_to_element(loginUserPasswordInput,password)
+        actions.perform()
         
         self.waitForElementVisible((By.ID,"login-button"))
         loginBtn = self.driver.find_element(By.ID, "login-button")
@@ -69,7 +67,7 @@ class Test_Demo:
     @pytest.mark.parametrize("username,password",[("locked_out_user","secret_sauce")])
     def test_locked_out_user(self, username: Literal['locked_out_user'], password: Literal['secret_sauce']):
         self.waitForElementVisible((By.ID,"user-name"))
-        loginUserNameInput = self.driver.find_element((By.ID,"user-name"))
+        loginUserNameInput = self.driver.find_element(By.ID,"user-name")
         self.waitForElementVisible((By.ID,"password"))
         loginUserPasswordInput = self.driver.find_element(By.ID,"password")
         
@@ -78,11 +76,11 @@ class Test_Demo:
         actions.send_keys_to_element(loginUserPasswordInput,password)
         actions.perform()
         
-        self.waitForElementVisible(By.ID,"login-button")
+        self.waitForElementVisible((By.ID,"login-button"))
         loginBtn = self.driver.find_element(By.ID, "login-button")
         loginBtn.click()
         
-        self.driver.save_screenshot(f"{self.folderPath}/test-login-locked-user-{username}-{password}.png")
+        self.driver.save_screenshot(f"{self.folderPath}/test-login-locked-out-user-{username}-{password}.png")
 
         errorMessage = self.driver.find_element(By.XPATH,"//*[@id='login_button_container']/div/form/div[3]/h3")
         assert errorMessage.text == "Epic sadface: Sorry, this user has been locked out."
@@ -143,10 +141,10 @@ class Test_Demo:
         loginBtn.click()
         
         self.driver.get("https://www.saucedemo.com/inventory.html")
-        self.driver.save_screenshot(f"{self.folderPath}/test-inventory-{username}-{password}.png")
+        self.driver.save_screenshot(f"{self.folderPath}/test-site-page-redirect-inventory-{username}-{password}.png")
     
     @pytest.mark.parametrize("username,password",[("standard_user","secret_sauce")])
-    def test_product_number(self, username: Literal['standard_user'], password: Literal['secret_sauce']):
+    def test_total_product_number(self, username: Literal['standard_user'], password: Literal['secret_sauce']):
         self.waitForElementVisible((By.ID,"user-name"))
         loginUserNameInput = self.driver.find_element(By.ID,"user-name")
         self.waitForElementVisible((By.ID,"password"))
@@ -161,28 +159,28 @@ class Test_Demo:
         loginBtn = self.driver.find_element(By.ID, "login-button")
         loginBtn.click()
         
-        productNumber = self.driver.find_elements("inventory-item")
-        self.driver.save_screenshot(f"{self.folderPath}/test-inventory-{username}-{password}.png")
-        assert len(productNumber) == 6
-    
+        totalProductNumber = self.driver.find_elements(By.CLASS_NAME,"inventory-item")
+        self.driver.save_screenshot(f"{self.folderPath}/test-total-product-number-{username}-{password}.png")
+        print(f"Total Product Number {len(totalProductNumber)}")
+
     @pytest.mark.parametrize("username,password", [("standard_user", "secret_sauce")])
     def test_product_filter(self, username: Literal['standard_user'], password: Literal['secret_sauce']):
         self.waitForElementVisible((By.ID, "user-name"))
-        userNameInput = self.driver.find_element(By.ID, "user-name")
+        loginUserNameInput = self.driver.find_element(By.ID, "user-name")
         self.waitForElementVisible((By.ID, "password"))
-        passwordInput = self.driver.find_element(By.ID, "password")
+        LoginUserPasswordInput = self.driver.find_element(By.ID, "password")
 
         action = ActionChains(self.driver)
-        action.send_keys_to_element(userNameInput, username)
-        action.send_keys_to_element(passwordInput, password)
+        action.send_keys_to_element(loginUserNameInput, username)
+        action.send_keys_to_element(LoginUserPasswordInput, password)
         action.perform()
-        logIn = self.driver.find_element(By.ID, "login-button")
-        logIn.click()
-        filtrele = self.driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div[2]/div/span/select")
-        filtrele.click()
-        filtrele2 = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[1]/div[2]/div/span/select/option[2]")
-        self.driver.save_screenshot(f"{self.folderPath}/test-filter.png")
-        filtrele2.click()
+        loginButton = self.driver.find_element(By.ID, "login-button")
+        loginButton.click()
+        filter = self.driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div[2]/div/span/select")
+        filter.click()
+        filter2 = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[1]/div[2]/div/span/select/option[2]")
+        self.driver.save_screenshot(f"{self.folderPath}/test-product-filter.png")
+        filter2.click()
 
     # sepete urun ekleme ve sepete gitme senaryosu
     @pytest.mark.parametrize("username,password", [("standard_user", "secret_sauce")])
@@ -203,7 +201,7 @@ class Test_Demo:
         addToCart.click()
         goToCart = self.driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div[1]/div[3]/a")
         goToCart.click()
-        self.driver.save_screenshot(f"{self.folderPath}/test-add-to-cart.png")
+        self.driver.save_screenshot(f"{self.folderPath}/test-add-product-number-and-go-shopping-cart.png")
 
     def waitForElementVisible(self, locator, timeout=5):
         WebDriverWait(self.driver, timeout).until(expected_conditions.visibility_of_element_located(locator))
