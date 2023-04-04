@@ -16,3 +16,5 @@ Day 2 - 2 - 2 - Class içinde dört işlem yapılması için fonksiyon oluşturm
 Day 2 - 2 - 3 - Class tan önce init constructor kullanılarak fonsiyon içinde yapılacak işlemlerde kullanılması gereken değişkenleri ve constructor içindeki değişkenlere parametre gönderebilmek için self anahtar kelimesini kullanarak bu constructor içinde tanımlama. Class içinde dört işlem yapılması için fonksiyon oluşturma. Oluşturulan fonksiyona self parametresinden sonra 2 tane değişken adını parametre olarak verme. Class içinde yer alan fonksiyon içindeki yazıya class dışından ulaşmak için class adını içeren obje oluşturma işlemi yapılıyor. Oluşturulan objenin atandığı değişken adı üzerinden class içindeki fonksiyona ulaştıktan sonra fonksiyon içindeki işlem yapılıyor ve sonuç ekrana yazılıyor.
 
 Day 2 - 2 - 4 - Class içinde init constructor oluşturma. init constructor içinde yapılacak işlemi belirtme. Class dışından class a gönderilen parametreyi yazdırma.
+
+Day 2 - 2 - 5 - Class içinde init constructor oluşturma. init constructor kullanılarak 4 işlem yapma ve sonucu print içinde işlemin yapıldığı fonksiyon adını yazarak ekrana yazdırma.
